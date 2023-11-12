@@ -177,10 +177,10 @@ def main():
     st.set_page_config(page_title="ETIS Intelligent Agent", page_icon=":bird:")
 
     st.header("ETIS Intelligent Agent :bird:")
-    query = st.text_input("Ask me anything")
+    query = st.text_input("Post a question or describe a problem, and I'll do research for you!")
 
     if query:
-        st.write("Doing research for ", query)
+        st.write("Doing research for: ", query)
 
         result = agent({"input": query})
 
