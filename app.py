@@ -29,14 +29,9 @@ serper_api_key = os.getenv("SERP_API_KEY")
 def search(query):
     url = "https://google.serper.dev/search"
 
-    payload = json.dumps({
-        "q": query
-    })
+    payload = json.dumps({"q": query})
 
-    headers = {
-        'X-API-KEY': serper_api_key,
-        'Content-Type': 'application/json'
-    }
+    headers = {"X-API-KEY": serper_api_key, "Content-Type": "application/json"}
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
@@ -53,14 +48,12 @@ def scrape_website(objective: str, url: str):
     print("Scraping website...")
     # Define the headers for the request
     headers = {
-        'Cache-Control': 'no-cache',
-        'Content-Type': 'application/json',
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json",
     }
 
     # Define the data to be sent in the request
-    data = {
-        "url": url
-    }
+    data = {"url": url}
 
     # Convert Python object to JSON string
     data_json = json.dumps(data)
@@ -88,7 +81,8 @@ def summary(objective, content):
     llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-16k-0613")
 
     text_splitter = RecursiveCharacterTextSplitter(
-        separators=["\n\n", "\n"], chunk_size=10000, chunk_overlap=500)
+        separators=["\n\n", "\n"], chunk_size=10000, chunk_overlap=500
+    )
     docs = text_splitter.create_documents([content])
     map_prompt = """
     Write a summary of the following text for {objective}:
@@ -96,14 +90,15 @@ def summary(objective, content):
     SUMMARY:
     """
     map_prompt_template = PromptTemplate(
-        template=map_prompt, input_variables=["text", "objective"])
+        template=map_prompt, input_variables=["text", "objective"]
+    )
 
     summary_chain = load_summarize_chain(
         llm=llm,
-        chain_type='map_reduce',
+        chain_type="map_reduce",
         map_prompt=map_prompt_template,
         combine_prompt=map_prompt_template,
-        verbose=True
+        verbose=True,
     )
 
     output = summary_chain.run(input_documents=docs, objective=objective)
@@ -113,8 +108,10 @@ def summary(objective, content):
 
 class ScrapeWebsiteInput(BaseModel):
     """Inputs for scrape_website"""
+
     objective: str = Field(
-        description="The objective & task that users give to the agent")
+        description="The objective & task that users give to the agent"
+    )
     url: str = Field(description="The url of the website to be scraped")
 
 
@@ -135,7 +132,7 @@ tools = [
     Tool(
         name="Search",
         func=search,
-        description="useful for when you need to answer questions about current events, data. You should ask targeted questions"
+        description="useful for when you need to answer questions about current events, data. You should ask targeted questions",
     ),
     ScrapeWebsiteTool(),
 ]
@@ -160,7 +157,8 @@ agent_kwargs = {
 
 llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-16k-0613")
 memory = ConversationSummaryBufferMemory(
-    memory_key="memory", return_messages=True, llm=llm, max_token_limit=1000)
+    memory_key="memory", return_messages=True, llm=llm, max_token_limit=1000
+)
 
 agent = initialize_agent(
     tools,
@@ -174,20 +172,36 @@ agent = initialize_agent(
 
 # 4. Use streamlit to create a web app
 def main():
-    st.set_page_config(page_title="ETIS Intelligent Agent", page_icon=":bird:")
+    st.set_page_config(page_title="Intelligent Agent", page_icon=":bird:")
 
-    st.header("ETIS Intelligent Agent :bird:")
-    query = st.text_input("Post a question or describe a problem, and I'll do research for you!")
+    # this markdown is for hiding "github" button
+    st.markdown(
+        """
+    <style>
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+        display: none;
+    }
+    </style>
+    """,
+        unsafe_allow_html=True,
+    )
+
+    st.header("Intelligent Agent :bird:")
+    query = st.text_input(
+        "Post a question or describe a problem, and I'll do research for you!"
+    )
 
     if query:
         st.write("Doing research for: ", query)
 
         result = agent({"input": query})
 
-        st.info(result['output'])
+        st.info(result["output"])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 
@@ -203,5 +217,5 @@ class Query(BaseModel):
 def researchAgent(query: Query):
     query = query.query
     content = agent({"input": query})
-    actual_content = content['output']
+    actual_content = content["output"]
     return actual_content
