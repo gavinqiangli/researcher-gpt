@@ -176,8 +176,8 @@ def main():
 
     # this markdown is for hiding "github" button
     st.markdown("<style>#MainMenu{visibility:hidden;}</style>", unsafe_allow_html=True)
-    # st.markdown("<style>footer{visibility: hidden;}</style>", unsafe_allow_html=True)
-    # st.markdown("<style>header{visibility: hidden;}</style>", unsafe_allow_html=True)
+    st.markdown("<style>footer{visibility: hidden;}</style>", unsafe_allow_html=True)
+    st.markdown("<style>header{visibility: hidden;}</style>", unsafe_allow_html=True)
     st.markdown(
     """
     <style>
