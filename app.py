@@ -174,26 +174,6 @@ agent = initialize_agent(
 def main():
     st.set_page_config(page_title="Intelligent Agent", page_icon=":bird:")
 
-    # this markdown is for enriching the web link
-    st.markdown(
-    """
-    <Head>
-          <title>Chat With Intelligent agent for investors</title>
-          <meta name="description" content="Checkout our cool intelligent agent for investors" key="desc" />
-          <meta property="og:title" content="Chat With Intelligent agent for investors" />
-          <meta
-            property="og:description"
-            content="Checkout our cool intelligent agent for investors"
-          />
-          <meta
-            property="og:image"
-            content="https://replicate.delivery/pbxt/qoTthCMjYZpzB52NXsUF7ThWZbH4bEXJDz63GEcHpqZ440fIA/out-0.png"
-          />
-    </Head>
-    """,
-    unsafe_allow_html=True
-    )
-
     # this markdown is for hiding "github" button
     st.markdown("<style>#MainMenu{visibility:hidden;}</style>", unsafe_allow_html=True)
     st.markdown("<style>footer{visibility: hidden;}</style>", unsafe_allow_html=True)
