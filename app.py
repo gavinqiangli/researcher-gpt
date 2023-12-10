@@ -172,7 +172,7 @@ agent = initialize_agent(
 
 # 4. Use streamlit to create a web app
 def main():
-    st.set_page_config(page_title="Intelligent Agent", page_icon=":bird:")
+    st.set_page_config(page_title="Your Personal Intelligent Agent", page_icon=":bird:")
 
     # this markdown is for hiding "github" button
     st.markdown("<style>#MainMenu{visibility:hidden;}</style>", unsafe_allow_html=True)
@@ -187,7 +187,7 @@ def main():
     unsafe_allow_html=True
     )
 
-    st.header("Intelligent Agent :bird:")
+    st.header("Your Personal Intelligent Agent :bird:")
     query = st.text_input(
         "Post a question or describe a problem, and I'll do research for you!"
     )

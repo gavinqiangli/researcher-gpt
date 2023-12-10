@@ -1,3 +1,6 @@
+Personal Intelligent Agent: This is Your Personal Intelligent Agent for doing research work, answering questions, and solving problems
+
+Steps: 
 0. Search API:
 serper api free credits:
 https://serper.dev/dashboard
