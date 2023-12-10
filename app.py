@@ -211,6 +211,9 @@ app = FastAPI()
 class Query(BaseModel):
     query: str
 
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
 
 @app.post("/")
 def researchAgent(query: Query):
