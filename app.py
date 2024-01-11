@@ -188,6 +188,8 @@ def main():
     )
 
     st.header("Your Personal Intelligent Agent :bird:")
+    st.markdown("Demo by [Qiang Li](https://www.linkedin.com/in/qianglil/). All rights reserved.")
+
     query = st.text_input(
         "Post a question or describe a problem, and I'll do research for you!"
     )
